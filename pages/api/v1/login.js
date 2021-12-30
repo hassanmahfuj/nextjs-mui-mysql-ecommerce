@@ -20,20 +20,20 @@ export default async function handler(req, res) {
           } else {
             res
               .status(403)
-              .json({ error: "There was a problem in your request!" });
+              .json({ error: "There was a problem in your request!1" });
           }
         } else {
           res
             .status(404)
-            .json({ error: "There was a problem in your request!" });
+            .json({ error: "There was a problem in your request!2" });
         }
       } catch (error) {
         res.status(500).json({ error: error.message });
       }
     } else {
-      res.status(400).json({ error: "There was a problem in your request!" });
+      res.status(400).json({ error: "There was a problem in your request!3" });
     }
   } else {
-    res.status(405).json({ error: "There was a problem in your request!" });
+    res.status(405).json({ error: "There was a problem in your request!4" });
   }
 }
