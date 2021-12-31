@@ -1,4 +1,9 @@
+import * as React from "react";
+import Link from "next/link";
+// mui icons
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+// mui components
 import { Link as MUILink } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -10,37 +15,28 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
-import * as React from "react";
+// components
 import Header from "../components/Header";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
+    console.log(data);
+    const jData = {
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+
+    fetch("http://localhost:3000/api/v1/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jData),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
 
   return (
@@ -51,6 +47,7 @@ export default function SignUp() {
         <Box
           sx={{
             marginTop: 8,
+            marginBottom: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -124,6 +121,7 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
+              startIcon={<HowToRegIcon />}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
@@ -139,7 +137,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </>
   );

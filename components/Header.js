@@ -1,19 +1,19 @@
-import MenuIcon from "@mui/icons-material/Menu";
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import Link from "next/link";
 import * as React from "react";
+import Link from "next/link";
+// mui icons
+import MenuIcon from "@mui/icons-material/Menu";
+// mui components
+import AppBar from "@mui/material/AppBar";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -98,7 +98,7 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-            dir="rtl"
+            justifyContent="flex-end"
           >
             {pages.map((page) => (
               <Button
@@ -114,7 +114,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="/vercel.svg" />
               </IconButton>
             </Tooltip>
             <Menu

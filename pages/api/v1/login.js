@@ -1,6 +1,8 @@
 // imports
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import db from "../../../lib/mariadb";
+//require("dotenv").config();
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -22,7 +24,18 @@ export default async function handler(req, res) {
         if (result.length > 0) {
           const success = await bcrypt.compare(password, result[0].password);
           if (success) {
-            res.status(200).json({ message: "Login Successful!" });
+            const token = jwt.sign(
+              {
+                email,
+              },
+              process.env.JWT_SECRET,
+              {
+                expiresIn: "1h",
+              }
+            );
+            res
+              .status(200)
+              .json({ access_token: token, message: "Login Successful!" });
 
             // password is not matched
           } else {
