@@ -1,152 +1,75 @@
 import * as React from "react";
-import Link from "next/link";
+import Image from "next/image";
+import Logo from "../public/logo.svg";
+import { grey } from "@mui/material/colors";
 // mui icons
-import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 // mui components
 import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import { styled } from "@mui/material/styles";
+import Hidden from "@mui/material/Hidden";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const StyledInputBase = styled(OutlinedInput)(({ theme }) => ({
+  color: "inherit",
+  borderRadius: "20px",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+  },
+}));
 
-const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
+function Search() {
   return (
-    <AppBar position="sticky">
+    <StyledInputBase
+      placeholder="Searching for..."
+      inputProps={{ "aria-label": "search" }}
+      color="secondary"
+      startAdornment={
+        <InputAdornment position="start">
+          <SearchIcon fontSize="small" />
+        </InputAdornment>
+      }
+      sx={{ flexGrow: 1 }}
+    />
+  );
+}
+
+export default function AppNav() {
+  return (
+    <AppBar
+      position="relative"
+      color="inherit"
+      sx={{ boxShadow: "0px 4px 16px rgba(43, 52, 69, 0.1)" }}
+    >
       <Container maxWidth="md">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            <Link href="/" passHref>
-              LOGO
-            </Link>
-          </Typography>
+          <Box sx={{ minWidth: { xs: "140px", md: "170px" } }}>
+            <Image src={Logo} alt="Logo" />
+          </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
+          <Search />
+
+          <Hidden smDown>
+            <IconButton sx={{ bgcolor: grey[100], marginLeft: 2 }}>
+              <PersonOutlineIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            LOGO2
-          </Typography>
-          <Box
-            sx={{
-              flexGrow: 1,
-              marginRight: 2,
-              display: { xs: "none", md: "flex" },
-            }}
-            justifyContent="flex-end"
-          >
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar />
+            <Badge badgeContent={4} color="secondary">
+              <IconButton sx={{ bgcolor: grey[100], marginLeft: 1 }}>
+                <ShoppingBagOutlinedIcon />
               </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+            </Badge>
+          </Hidden>
         </Toolbar>
       </Container>
     </AppBar>
   );
-};
-export default ResponsiveAppBar;
+}
