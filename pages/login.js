@@ -2,6 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 // mui icons
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
 // mui components
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -17,33 +18,22 @@ import Typography from "@mui/material/Typography";
 // components
 import Header from "../components/Header";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 export default function SignIn() {
+  const [error, setError] = React.useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
+    const body = {
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+    console.log(body.email);
+    if (body.email === "") {
+      setError(true);
+    } else {
+      setError(false);
+    }
   };
 
   return (
@@ -54,6 +44,7 @@ export default function SignIn() {
         <Box
           sx={{
             marginTop: 8,
+            marginBottom: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -72,7 +63,7 @@ export default function SignIn() {
             sx={{ mt: 1 }}
           >
             <TextField
-              margin="normal"
+              margin="dense"
               required
               fullWidth
               id="email"
@@ -80,9 +71,11 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              error={error}
+              helperText={error ? "Required" : " "}
             />
             <TextField
-              margin="normal"
+              margin="dense"
               required
               fullWidth
               name="password"
@@ -99,6 +92,7 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
+              startIcon={<VpnKeyIcon />}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
@@ -119,7 +113,6 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </>
   );

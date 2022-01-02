@@ -97,7 +97,11 @@ const ResponsiveAppBar = () => {
             LOGO2
           </Typography>
           <Box
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+            sx={{
+              flexGrow: 1,
+              marginRight: 2,
+              display: { xs: "none", md: "flex" },
+            }}
             justifyContent="flex-end"
           >
             {pages.map((page) => (
@@ -114,7 +118,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/vercel.svg" />
+                <Avatar />
               </IconButton>
             </Tooltip>
             <Menu
