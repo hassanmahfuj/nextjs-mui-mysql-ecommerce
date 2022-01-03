@@ -4,6 +4,7 @@ import { indigo, red } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
+    mode: "light",
     primary: {
       main: indigo[500],
     },
@@ -16,7 +17,7 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </ThemeProvider>
   );
 }

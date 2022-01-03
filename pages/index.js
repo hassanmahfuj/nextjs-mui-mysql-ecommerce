@@ -1,5 +1,6 @@
 // components
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import BottomNavBar from "../components/BottomNavBar";
 
 import Container from "@mui/material/Container";
@@ -27,6 +28,7 @@ export default function Home() {
         <Typography variant="h1">Hello World</Typography>
         <Typography variant="h1">Hello World</Typography>
       </Container>
+      <Footer />
       <BottomNavBar />
     </>
   );

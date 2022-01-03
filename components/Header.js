@@ -1,7 +1,7 @@
 import * as React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Logo from "../public/logo.svg";
-import { grey } from "@mui/material/colors";
 // mui icons
 import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
@@ -50,20 +50,24 @@ export default function AppNav() {
       color="inherit"
       sx={{ boxShadow: "0px 4px 16px rgba(43, 52, 69, 0.1)" }}
     >
-      <Container maxWidth="md">
+      <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Box sx={{ minWidth: { xs: "140px", md: "170px" } }}>
-            <Image src={Logo} alt="Logo" />
+            <Link href="/" passHref>
+              <a>
+                <Image src={Logo} alt="Logo" />
+              </a>
+            </Link>
           </Box>
 
           <Search />
 
           <Hidden smDown>
-            <IconButton sx={{ bgcolor: grey[100], marginLeft: 2 }}>
+            <IconButton sx={{ bgcolor: "grey.100", marginLeft: 2 }}>
               <PersonOutlineIcon />
             </IconButton>
             <Badge badgeContent={4} color="secondary">
-              <IconButton sx={{ bgcolor: grey[100], marginLeft: 1 }}>
+              <IconButton sx={{ bgcolor: "grey.100", marginLeft: 1 }}>
                 <ShoppingBagOutlinedIcon />
               </IconButton>
             </Badge>
