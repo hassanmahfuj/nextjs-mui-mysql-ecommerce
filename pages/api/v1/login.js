@@ -2,7 +2,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import db from "../../../lib/mariadb";
-//require("dotenv").config();
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
