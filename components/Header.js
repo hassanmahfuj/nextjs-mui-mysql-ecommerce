@@ -53,7 +53,7 @@ export default function AppNav() {
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Box sx={{ minWidth: { xs: "140px", md: "170px" } }}>
-            <Link href="/" passHref>
+            <Link href={"/"} passHref>
               <a>
                 <Image src={Logo} alt="Logo" />
               </a>
@@ -63,9 +63,11 @@ export default function AppNav() {
           <Search />
 
           <Hidden smDown>
-            <IconButton sx={{ bgcolor: "grey.100", marginLeft: 2 }}>
-              <PersonOutlineIcon />
-            </IconButton>
+            <Link href={"/dashboard"} passHref>
+              <IconButton sx={{ bgcolor: "grey.100", marginLeft: 2 }}>
+                <PersonOutlineIcon />
+              </IconButton>
+            </Link>
             <Badge badgeContent={4} color="secondary">
               <IconButton sx={{ bgcolor: "grey.100", marginLeft: 1 }}>
                 <ShoppingBagOutlinedIcon />
