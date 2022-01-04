@@ -1,7 +1,9 @@
 // imports
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import db from "../../../lib/mariadb";
+import db from "../../../models";
+
+const User = db.users;
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -19,9 +21,9 @@ export default async function handler(req, res) {
     // only procced if email and password is valid
     if (email && password) {
       try {
-        const result = await db.find("users", "email", email);
-        if (result.length > 0) {
-          const success = await bcrypt.compare(password, result[0].password);
+        const user = await User.findOne({ where: { email } });
+        if (user !== null) {
+          const success = await bcrypt.compare(password, user.password);
           if (success) {
             const token = jwt.sign(
               {
