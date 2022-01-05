@@ -1,6 +1,7 @@
 // imports
 import bcrypt from "bcryptjs";
 import db from "../../../models";
+import validator from "../../../lib/validator";
 
 const User = db.users;
 
@@ -10,12 +11,8 @@ export default async function handler(req, res) {
     let { email, password } = req.body;
 
     // validating user data
-    email =
-      typeof email === "string" && email.trim().length > 0 ? email : false;
-    password =
-      typeof password === "string" && password.trim().length > 0
-        ? password
-        : false;
+    email = validator.email(email);
+    password = validator.password(password);
 
     // only procced if email and password is valid
     if (email && password) {
