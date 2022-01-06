@@ -1,5 +1,4 @@
 // imports
-import bcrypt from "bcryptjs";
 import db from "../../../models";
 import validator from "../../../lib/validator";
 
@@ -8,36 +7,24 @@ const User = db.users;
 export default async function handler(req, res) {
   if (req.method === "POST") {
     // parsing data from request body
-    let { email, password } = req.body;
+    const { email, password } = req.body;
+    try {
+      const user = await User.create({ email, password });
+      res.status(200).json({ message: "Signup Successful!", user });
+    } catch (error) {
+      let errors = {};
 
-    // validating user data
-    email = validator.email(email);
-    password = validator.password(password);
-
-    // only procced if email and password is valid
-    if (email && password) {
-      try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({
-          email,
-          password: hashedPassword,
+      if (error.name === "SequelizeUniqueConstraintError") {
+        errors.email = "Email already taken!";
+      } else if (error.name === "SequelizeValidationError") {
+        error.errors.forEach((e) => {
+          errors[e.path] = e.message;
         });
-        res.status(200).json({ message: "Signup Successful!", user });
-
-        // database error
-      } catch (error) {
-        if (error.name === "SequelizeUniqueConstraintError") {
-          res.status(403).json({ error: "Email already exists!" });
-        } else {
-          res.status(500).json({ error: error.message });
-        }
+      } else {
+        errors.error = error.message;
       }
 
-      // email or password is invalid
-    } else {
-      res.status(400).json({
-        error: "There was a problem in your request!",
-      });
+      res.status(403).json(errors);
     }
 
     // not an accepted method

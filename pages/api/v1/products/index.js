@@ -10,7 +10,10 @@ const handler = async (req, res) => {
       limit = parseInt(limit);
       const offset = limit * (page - 1);
       try {
-        const products = await Product.findAll({ offset, limit });
+        const products = await Product.scope("withoutPrice").findAll({
+          offset,
+          limit,
+        });
         res.status(200).json({ status: "success", products });
       } catch (error) {
         res.status(500).json({ status: "error", message: error.message });

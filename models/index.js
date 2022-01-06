@@ -14,6 +14,7 @@ const sequelize = new Sequelize(
       acquire: 30000,
       idle: 10000,
     },
+    logging: false,
   }
 );
 
@@ -28,14 +29,13 @@ sequelize
 
 const db = {};
 
-db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.users = require("./userModel.js")(sequelize, DataTypes);
 db.products = require("./productModel.js")(sequelize, DataTypes);
 
-// db.sequelize.sync({ force: false }).then(() => {
-//   console.log("Re-Sync Done!");
-// });
+db.sequelize.sync({ alter: true }).then(() => {
+  console.log("Re-Sync Done!");
+});
 
 module.exports = db;
