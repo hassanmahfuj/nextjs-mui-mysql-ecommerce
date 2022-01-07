@@ -24,7 +24,7 @@ export default async function handler(req, res) {
         errors.error = error.message;
       }
 
-      res.status(403).json(errors);
+      res.status(200).json(errors);
     }
 
     // not an accepted method

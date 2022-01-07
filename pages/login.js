@@ -18,8 +18,11 @@ import Typography from "@mui/material/Typography";
 // components
 import Header from "../components/Header";
 
+import axios from "axios";
+
 export default function SignIn() {
-  const [error, setError] = React.useState(false);
+  const [emailError, setEmailError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,12 +31,21 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     };
-    console.log(body.email);
-    if (body.email === "") {
-      setError(true);
-    } else {
-      setError(false);
-    }
+
+    axios
+      .post("/api/v1/login", body)
+      .then(function (response) {
+        if (response.data.error) {
+          setEmailError(response.data.error.email);
+          setPasswordError(response.data.error.password);
+          console.log(response.data);
+        } else {
+          console.log(response.data);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -71,8 +83,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
-              error={error}
-              helperText={error ? "Required" : " "}
+              error={emailError}
+              helperText={emailError ? response.data.error.email : ""}
             />
             <TextField
               margin="dense"
@@ -83,6 +95,8 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              error={passwordError}
+              helperText={passwordError ? response.data.error.password : ""}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

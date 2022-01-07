@@ -18,25 +18,50 @@ import Typography from "@mui/material/Typography";
 // components
 import Header from "../components/Header";
 
+import axios from "axios";
+
 export default function SignUp() {
+  const [emailError, setEmailError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data);
-    const jData = {
+    const body = {
       email: data.get("email"),
       password: data.get("password"),
     };
 
-    fetch("http://localhost:3000/api/v1/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jData),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    axios
+      .post("/api/v1/register", body)
+      // .then(function (response) {
+      //   if (response.data.email) {
+      //     setEmailError(response.data.error.email);
+      //     setPasswordError(response.data.error.password);
+      //     console.log(response.data.error.password);
+      //   } else {
+      //     //console.log(response.data);
+      //   }
+      // })
+      .then((response) => response.data)
+      .then((data) => {
+        setEmailError(data.email);
+        setPasswordError(data.password);
+        //console.log(data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    // fetch("http://localhost:3000/api/v1/register", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(jData),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data));
   };
 
   return (
@@ -74,6 +99,8 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  error={emailError}
+                  helperText={emailError}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -85,6 +112,8 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  error={passwordError}
+                  helperText={passwordError ? passwordError : ""}
                 />
               </Grid>
               <Grid item xs={12}>

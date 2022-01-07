@@ -34,7 +34,7 @@ export default async function handler(req, res) {
 
         // email not found
       } else {
-        res.status(404).json({ error: "Email is not registered!" });
+        res.status(200).json({ error: "Email is not registered!" });
       }
 
       // database error
