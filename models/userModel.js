@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+
         validate: {
           notNull: {
             msg: "Cannot be Empty!",
@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
+      indexes: [{ unique: true, fields: ["email"] }],
       defaultScope: {
         attributes: { exclude: ["id"] },
       },
