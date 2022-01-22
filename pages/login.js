@@ -1,24 +1,24 @@
-import * as React from "react";
-import Link from "next/link";
+import * as React from 'react';
+import Link from 'next/link';
 // mui icons
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 // mui components
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Grid from "@mui/material/Grid";
-import { Link as MUILink } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import { Link as MUILink } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 // components
-import Header from "../components/Header";
+import Header from '../components/Header';
 
-import axios from "axios";
+import axios from 'axios';
 
 export default function SignIn() {
   const [emailError, setEmailError] = React.useState(false);
@@ -28,12 +28,12 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const body = {
-      email: data.get("email"),
-      password: data.get("password"),
+      email: data.get('email'),
+      password: data.get('password'),
     };
 
     axios
-      .post("/api/v1/login", body)
+      .post('/api/v1/login', body)
       .then(function (response) {
         if (response.data.error) {
           setEmailError(response.data.error.email);
@@ -57,23 +57,18 @@ export default function SignIn() {
           sx={{
             marginTop: 8,
             marginBottom: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="dense"
               required
@@ -84,7 +79,7 @@ export default function SignIn() {
               autoComplete="email"
               autoFocus
               error={emailError}
-              helperText={emailError ? response.data.error.email : ""}
+              helperText={emailError ? response.data.error.email : ''}
             />
             <TextField
               margin="dense"
@@ -96,7 +91,7 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
               error={passwordError}
-              helperText={passwordError ? response.data.error.password : ""}
+              helperText={passwordError ? response.data.error.password : ''}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -119,9 +114,7 @@ export default function SignIn() {
               </Grid>
               <Grid item>
                 <Link href="/register" passHref>
-                  <MUILink variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </MUILink>
+                  <MUILink variant="body2">{"Don't have an account? Sign Up"}</MUILink>
                 </Link>
               </Grid>
             </Grid>
